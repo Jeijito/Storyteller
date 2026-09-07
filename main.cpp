@@ -11,21 +11,21 @@ using namespace std;
 
 int main() {
 
-    vector<string> firstNames = {
+    const vector<string> firstNames = {
         "Alex",
         "Daniel",
         "Jesus",
         "James"
     };
 
-    vector<string> lastNames = {
+    const vector<string> lastNames = {
         "Smith",
         "Garcia",
         "Johnson",
         "Brown"
     };
 
-    vector<string> traits = {
+    const vector<string> traits = {
         "Ambitious", "Brave", "Calm", "Careful", "Charismatic",
         "Compassionate", "Confident", "Creative", "Curious", "Disciplined",
         "Energetic", "Generous", "Hard Worker", "Honest", "Independent",

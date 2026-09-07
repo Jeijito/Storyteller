@@ -4,9 +4,45 @@
 #include <unordered_map>
 using namespace std;
 
-Person::Person(int id) : id(id) {
-    id = id;    
-}
+
+const unordered_map<string, vector<string>> Person::conflicts = {
+    {"Ambitious", {"Lazy"}},
+    {"Brave", {"Cowardly"}},
+    {"Calm", {"Impulsive", "Reckless"}},
+    {"Careful", {"Reckless"}},
+    {"Compassionate", {"Selfish"}},
+    {"Confident", {"Shy"}},
+    {"Creative", {"Uncreative"}},
+    {"Disciplined", {"Lazy", "Impulsive", "Disorganized"}},
+    {"Energetic", {"Lazy"}},
+    {"Generous", {"Selfish"}},
+    {"Hard Worker", {"Lazy"}},
+    {"Honest", {"Dishonest"}},
+    {"Independent", {"Dependent"}},
+    {"Loyal", {"Disloyal"}},
+    {"Optimistic", {"Pessimistic"}},
+    {"Organized", {"Disorganized"}},
+    {"Patient", {"Impatient"}},
+    {"Adaptable", {"Stubborn"}},
+    {"Cautious", {"Reckless"}},
+
+    {"Cowardly", {"Brave"}},
+    {"Dishonest", {"Honest"}},
+    {"Impulsive", {"Calm", "Disciplined", "Cautious"}},
+    {"Lazy", {"Ambitious", "Disciplined", "Energetic", "Hard Worker"}},
+    {"Pessimistic", {"Optimistic"}},
+    {"Reckless", {"Calm", "Careful", "Cautious"}},
+    {"Selfish", {"Compassionate", "Generous"}},
+    {"Shy", {"Confident"}},
+    {"Stubborn", {"Adaptable"}},
+    {"Disorganized", {"Disciplined", "Organized"}},
+    {"Impatient", {"Patient"}},
+    {"Dependent", {"Independent"}},
+    {"Uncreative", {"Creative"}},
+    {"Disloyal", {"Loyal"}}
+};
+
+Person::Person(int id) : id(id) {} 
 
 void Person::setAge() {
     unsigned seed = std::random_device{}() ^ std::chrono::system_clock::now().time_since_epoch().count();
@@ -51,10 +87,14 @@ void Person::setTraits(const vector<string>& availableTraits)
                 break;
             }
 
-            for (const string& conflictingTrait : conflicts[candidate]) {
-                if (currentTrait == conflictingTrait) {
-                    valid = false;
-                    break;
+            unordered_map<string, vector<string>>::const_iterator found = conflicts.find(candidate);
+
+            if (found != conflicts.end()) {
+                for (const string& conflictingTrait : found->second) {
+                    if (currentTrait == conflictingTrait) {
+                        valid = false;
+                        break;
+                    }
                 }
             }
 
