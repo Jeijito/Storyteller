@@ -13,7 +13,9 @@ private:
 
 public:
     void setCharacter(Person characterName);
-    void printCharacters() const;
+    void printStory(const vector<string>& spawnedItems) const;
+    void story();
+    vector<string> spawnItems(const vector<string>& itemPool) const;
 };
 
 #endif

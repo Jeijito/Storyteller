@@ -50,7 +50,7 @@ int main() {
         story.setCharacter(person);
     }
 
-    story.printCharacters();
+    story.story();
 
     return 0;
 }
