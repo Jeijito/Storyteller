@@ -36,21 +36,23 @@ int main() {
         "Dependent", "Uncreative", "Disloyal"
     };
 
-    unsigned seed = std::random_device{}() ^ std::chrono::system_clock::now().time_since_epoch().count();
+    unsigned seed = random_device{}();
     mt19937 gen(seed);
+
+    cout << "Story seed: " << seed << endl;
     uniform_int_distribution<int> distrib(2, 5);
     int random_number = distrib(gen);
 
     Story story;
     for (int i = 0; i < random_number; ++i) {
         Person person(i);
-        person.setName(firstNames, lastNames);
-        person.setAge();
-        person.setTraits(traits);
+        person.setName(firstNames, lastNames, gen);
+        person.setAge(gen);
+        person.setTraits(traits, gen);
         story.setCharacter(person);
     }
 
-    story.story();
+    story.story(gen);
 
     return 0;
 }

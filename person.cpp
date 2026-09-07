@@ -24,7 +24,7 @@ const unordered_map<string, vector<string>> Person::conflicts = {
     {"Organized", {"Disorganized"}},
     {"Patient", {"Impatient"}},
     {"Adaptable", {"Stubborn"}},
-    {"Cautious", {"Reckless"}},
+    {"Cautious", {"Reckless", "Impulsive"}},
 
     {"Cowardly", {"Brave"}},
     {"Dishonest", {"Honest"}},
@@ -44,16 +44,12 @@ const unordered_map<string, vector<string>> Person::conflicts = {
 
 Person::Person(int id) : id(id) {} 
 
-void Person::setAge() {
-    unsigned seed = std::random_device{}() ^ std::chrono::system_clock::now().time_since_epoch().count();
-    mt19937 gen(seed);
+void Person::setAge(mt19937& gen) {
     uniform_int_distribution<int> distrib(18, 29);
     age = distrib(gen);
 }
 
-void Person::setName(const vector<string>& firstNames, const vector<string>& lastNames) {
-    unsigned seed = std::random_device{}() ^ std::chrono::system_clock::now().time_since_epoch().count();
-    mt19937 gen(seed);
+void Person::setName(const vector<string>& firstNames, const vector<string>& lastNames, mt19937& gen) {
     uniform_int_distribution<int> distribFirst(0, firstNames.size() - 1);
     uniform_int_distribution<int> distribLast(0, lastNames.size() - 1);
 
@@ -64,14 +60,12 @@ void Person::setName(const vector<string>& firstNames, const vector<string>& las
     
 }
 
-void Person::setTraits(const vector<string>& availableTraits)
+void Person::setTraits(const vector<string>& availableTraits, mt19937& gen)
 {
     if (availableTraits.empty()) {
         return;
     }
 
-    unsigned seed = random_device{}() ^ chrono::system_clock::now().time_since_epoch().count();
-    mt19937 gen(seed);
     uniform_int_distribution<size_t> distrib(0, availableTraits.size() - 1);
 
     int added = 0;

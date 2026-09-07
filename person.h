@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <random>
 
 using namespace std;
 
@@ -17,9 +18,9 @@ private:
 
 public:
     Person(int id);
-    void setName(const vector<string>& firstNames, const vector<string>& lastNames);
-    void setAge();
-    void setTraits(const vector<string>& availableTraits);
+    void setName(const vector<string>& firstNames, const vector<string>& lastNames, mt19937& gen);
+    void setAge(mt19937& gen);
+    void setTraits(const vector<string>& availableTraits, mt19937& gen);
     int returnId() const { return id; }
     int returnAge() const { return age; }
     string returnName() const { return name; }

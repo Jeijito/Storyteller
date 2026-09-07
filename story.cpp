@@ -29,10 +29,8 @@ void Story::printStory(const vector<string>& spawnedItems) const {
 }
 
 
-vector<string> Story::spawnItems(const vector<string>& itemPool) const {
+vector<string> Story::spawnItems(const vector<string>& itemPool, mt19937& gen) const {
     vector<string> spawnedItems;
-    unsigned seed = std::random_device{}() ^ std::chrono::system_clock::now().time_since_epoch().count();
-    mt19937 gen(seed);
     uniform_int_distribution<int> distrib(0, itemPool.size() - 1);
 
     int numberOfItems = 50;
@@ -45,8 +43,7 @@ vector<string> Story::spawnItems(const vector<string>& itemPool) const {
 }
 
 
-
-void Story::story(){
+void Story::story(mt19937& gen){
     vector<string> itemPool = {
     "Kitchen Knife",
     "Hunting Knife",
@@ -100,7 +97,7 @@ void Story::story(){
     "Emergency Flare"
     };
 
-    vector<string> spawnedItems = spawnItems(itemPool);
+    vector<string> spawnedItems = spawnItems(itemPool, gen);
     printStory(spawnedItems);
 
 
