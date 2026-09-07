@@ -18,8 +18,14 @@ void Story::printStory(const vector<string>& spawnedItems) const {
         cout << "Name: " << character.returnName() << endl;
         cout << "Age: " << character.returnAge() << endl;
         cout << "Traits: ";
-        for (const string& trait : character.returnTraits()) {
-            cout << trait << ", ";
+        const vector<string>& traits = character.returnTraits();
+
+        for (size_t i = 0; i < traits.size(); ++i) {
+            cout << traits[i];
+
+            if (i != traits.size() - 1) {
+                cout << ", ";
+            }
         }
         cout << endl;
     }
