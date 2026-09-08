@@ -1,6 +1,7 @@
 #ifndef ITEM_H
 #define ITEM_H
 
+#include <string>
 using namespace std;
 
 class Item{
@@ -11,6 +12,6 @@ public:
     Item(string name, int weight) : name(name), weight(weight) {}
     string getName() const { return name; }
     int getWeight() const { return weight; }
-}
+};
 
-#endif // ITEM_H
+#endif

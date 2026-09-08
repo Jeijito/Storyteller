@@ -5,52 +5,11 @@
 #include <iostream>
 #include <random>
 #include <chrono>
+#include "Item.h"
 
 using namespace std;
 
-void Story::setCharacter(Person characterName) {
-    characters.push_back(characterName);
-}
-
-void Story::printStory(const vector<string>& spawnedItems) const {
-    for (const Person& character : characters) {
-        cout << "Character ID: " << character.returnId() << endl;
-        cout << "Name: " << character.returnName() << endl;
-        cout << "Age: " << character.returnAge() << endl;
-        cout << "Traits: ";
-        const vector<string>& traits = character.returnTraits();
-
-        for (size_t i = 0; i < traits.size(); ++i) {
-            cout << traits[i];
-
-            if (i != traits.size() - 1) {
-                cout << ", ";
-            }
-        }
-        cout << endl;
-    }
-    for (const string& item : spawnedItems) {
-        cout << "Item: " << item << endl;
-    }
-}
-
-
-vector<string> Story::spawnItems(const vector<string>& itemPool, mt19937& gen) const {
-    vector<string> spawnedItems;
-    uniform_int_distribution<int> distrib(0, itemPool.size() - 1);
-
-    int numberOfItems = 50;
-    for (int i = 0; i < numberOfItems; ++i) {
-        string item = itemPool[distrib(gen)];
-        spawnedItems.push_back(item);
-    }
-
-    return spawnedItems;
-}
-
-
-void Story::story(mt19937& gen){
-    vector<Item> itemPool = {
+const vector<Item> Story::itemPool = {
     Item("Kitchen Knife", 2),
     Item("Hunting Knife", 3),
     Item("Baseball Bat", 4),
@@ -90,9 +49,53 @@ void Story::story(mt19937& gen){
     Item("Solar Charger", 10),
     Item("Water Filter", 10),
     Item("Emergency Flare", 2)
-    };
+};
 
-    vector<string> spawnedItems = spawnItems(itemPool, gen);
+
+void Story::setCharacter(Person characterName) {
+    characters.push_back(characterName);
+}
+
+void Story::printStory(const vector<Item>& spawnedItems) const {
+    for (const Person& character : characters) {
+        cout << "Character ID: " << character.returnId() << endl;
+        cout << "Name: " << character.returnName() << endl;
+        cout << "Age: " << character.returnAge() << endl;
+        cout << "Traits: ";
+        const vector<string>& traits = character.returnTraits();
+
+        for (size_t i = 0; i < traits.size(); ++i) {
+            cout << traits[i];
+
+            if (i != traits.size() - 1) {
+                cout << ", ";
+            }
+        }
+        cout << endl;
+    }
+    for (const Item& item : spawnedItems) {
+        cout << "Item: " << item.getName() << endl;
+    }
+}
+
+
+vector<Item> Story::spawnItems(mt19937& gen) const {
+    vector<Item> spawnedItems;
+    uniform_int_distribution<size_t> distrib(0, itemPool.size() - 1);
+
+    int numberOfItems = 50;
+
+    for (int i = 0; i < numberOfItems; ++i) {
+        spawnedItems.push_back(itemPool[distrib(gen)]);
+    }
+
+    return spawnedItems;
+}
+
+
+void Story::story(mt19937& gen){
+
+    vector<Item> spawnedItems = spawnItems(gen);
     printStory(spawnedItems);
 
 
