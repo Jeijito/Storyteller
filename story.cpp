@@ -82,9 +82,15 @@ void Story::printStory(const vector<Item>& spawnedItems) const {
 
 vector<Item> Story::spawnItems(mt19937& gen) const {
     vector<Item> spawnedItems;
-    uniform_int_distribution<size_t> distrib(0, itemPool.size() - 1);
+    vector<int> spawnWeights;
 
-    int numberOfItems = 50;
+    for (const Item& item : itemPool) {
+        spawnWeights.push_back(item.getInitialSpawnWeight());
+    }
+
+    discrete_distribution<size_t> distrib(spawnWeights.begin(), spawnWeights.end());
+
+    int numberOfItems = 15;
 
     for (int i = 0; i < numberOfItems; ++i) {
         spawnedItems.push_back(itemPool[distrib(gen)]);
