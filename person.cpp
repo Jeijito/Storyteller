@@ -104,6 +104,13 @@ void Person::setTraits(const vector<string>& availableTraits, mt19937& gen)
     }
 }
 
-void Person::addItem(const Item& item) {
+bool Person::addItem(const Item& item) {
+    if (inventoryWeight + item.getWeight() > maxInventoryWeight) {
+        return false;
+    }
+
     Inventory.push_back(item);
+    inventoryWeight += item.getWeight();
+
+    return true;
 }

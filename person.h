@@ -17,7 +17,8 @@ private:
     string name;
     static const unordered_map<string, vector<string>> conflicts;
     vector<Item> Inventory;
-
+    int inventoryWeight = 0;
+    int maxInventoryWeight = 20;
 public:
     Person(int id);
     void setName(const vector<string>& firstNames, const vector<string>& lastNames, mt19937& gen);
@@ -27,7 +28,7 @@ public:
     int returnAge() const { return age; }
     string returnName() const { return name; }
     const vector<string>& returnTraits() const { return traits; }
-    void addItem(const Item& item);
+    bool addItem(const Item& item);
 };
 
 #endif
