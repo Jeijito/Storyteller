@@ -6,6 +6,7 @@
 #include <random>
 #include <chrono>
 #include "Item.h"
+#include "Trait.h"
 
 using namespace std;
 
@@ -64,9 +65,9 @@ void Story::printStory() const {
         cout << "Age: " << survivor.returnAge() << endl;
         
         cout << "Traits: ";
-        const vector<string>& traits = survivor.returnTraits();
+        const vector<Trait>& traits = survivor.returnTraits();
         for (size_t i = 0; i < traits.size(); ++i) {
-            cout << traits[i];
+            cout << traits[i].getName();
 
             if (i != traits.size() - 1) {
                 cout << ", ";

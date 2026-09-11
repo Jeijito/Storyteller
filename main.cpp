@@ -6,6 +6,7 @@
 #include <vector>
 #include "person.h"
 #include "story.h"
+#include "Trait.h"
 
 using namespace std;
 

@@ -61,8 +61,7 @@ void Person::setName(const vector<string>& firstNames, const vector<string>& las
     
 }
 
-void Person::setTraits(const vector<string>& availableTraits, mt19937& gen)
-{
+void Person::setTraits(const vector<Trait>& availableTraits, mt19937& gen) {
     if (availableTraits.empty()) {
         return;
     }
@@ -73,26 +72,25 @@ void Person::setTraits(const vector<string>& availableTraits, mt19937& gen)
     int attempts = 0;
 
     while (added < 3 && attempts < 10) {
-        string candidate = availableTraits[distrib(gen)];
+        const Trait& candidate = availableTraits[distrib(gen)];
         bool valid = true;
 
-        for (const string& currentTrait : traits) {
-            if (candidate == currentTrait) {
+        for (const Trait& currentTrait : traits) {
+            if (candidate.getName() == currentTrait.getName()) {
                 valid = false;
                 break;
             }
 
-            unordered_map<string, vector<string>>::const_iterator found = conflicts.find(candidate);
+            auto found = conflicts.find(candidate.getName());
 
             if (found != conflicts.end()) {
                 for (const string& conflictingTrait : found->second) {
-                    if (currentTrait == conflictingTrait) {
+                    if (currentTrait.getName() == conflictingTrait) {
                         valid = false;
                         break;
                     }
                 }
             }
-
         }
 
         if (valid) {
