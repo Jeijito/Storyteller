@@ -5,6 +5,7 @@
 #include <vector>
 #include <unordered_map>
 #include <random>
+#include "Item.h"
 
 using namespace std;
 
@@ -15,6 +16,7 @@ private:
     int age;
     string name;
     static const unordered_map<string, vector<string>> conflicts;
+    static vector<Item> Inventory;
 
 public:
     Person(int id);
@@ -25,7 +27,7 @@ public:
     int returnAge() const { return age; }
     string returnName() const { return name; }
     const vector<string>& returnTraits() const { return traits; }
-
+    void addItem(const Item& item);
 };
 
 #endif

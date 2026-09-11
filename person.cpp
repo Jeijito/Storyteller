@@ -2,6 +2,7 @@
 #include <random>
 #include <chrono>
 #include <unordered_map>
+#include <vector>
 using namespace std;
 
 
@@ -103,3 +104,6 @@ void Person::setTraits(const vector<string>& availableTraits, mt19937& gen)
     }
 }
 
+void Person::addItem(const Item& item) {
+    Inventory.push_back(item);
+}
