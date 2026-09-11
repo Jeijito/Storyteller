@@ -74,17 +74,31 @@ void Story::printStory() const {
         }
         cout << endl;
         cout << "Items: ";
-        for (const Item& item : survivor.getInventory()) {
-            cout << item.getName() << " ";
+        const vector<Item>& inventory = survivor.getInventory();
+
+        for (size_t i = 0; i < inventory.size(); ++i) {
+            cout << inventory[i].getName();
+
+            if (i != inventory.size() - 1) {
+                cout << ", ";
+            }
         }
+
         cout << endl << endl;
         
     }
 
-    cout << "Bunker Items:" << endl;
-    for (const Item& item : bunkerInventory) {
-        cout << item.getName() << endl;
+    cout << "Bunker Items: ";
+
+    for (size_t i = 0; i < bunkerInventory.size(); ++i) {
+        cout << bunkerInventory[i].getName();
+
+        if (i != bunkerInventory.size() - 1) {
+            cout << ", ";
+        }
     }
+
+    cout << endl;
 }
 
 
