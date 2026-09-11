@@ -16,7 +16,7 @@ private:
     int age;
     string name;
     static const unordered_map<string, vector<string>> conflicts;
-    static vector<Item> Inventory;
+    vector<Item> Inventory;
 
 public:
     Person(int id);

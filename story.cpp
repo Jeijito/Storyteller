@@ -90,7 +90,7 @@ vector<Item> Story::spawnItems(mt19937& gen) const {
 
     discrete_distribution<size_t> distrib(spawnWeights.begin(), spawnWeights.end());
 
-    int numberOfItems = 15;
+    int numberOfItems = 10;
 
     for (int i = 0; i < numberOfItems; ++i) {
         spawnedItems.push_back(itemPool[distrib(gen)]);
