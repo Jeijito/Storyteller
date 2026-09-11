@@ -57,14 +57,14 @@ void Story::setCharacter(Person characterName) {
     characters.push_back(characterName);
 }
 
-void Story::printStory(const vector<Item>& spawnedItems) const {
-    for (const Person& character : characters) {
-        cout << "Character ID: " << character.returnId() << endl;
-        cout << "Name: " << character.returnName() << endl;
-        cout << "Age: " << character.returnAge() << endl;
+void Story::printStory() const {
+    for (const Person& survivor : characters) {
+        cout << "Character ID: " << survivor.returnId() << endl;
+        cout << "Name: " << survivor.returnName() << endl;
+        cout << "Age: " << survivor.returnAge() << endl;
+        
         cout << "Traits: ";
-        const vector<string>& traits = character.returnTraits();
-
+        const vector<string>& traits = survivor.returnTraits();
         for (size_t i = 0; i < traits.size(); ++i) {
             cout << traits[i];
 
@@ -73,36 +73,69 @@ void Story::printStory(const vector<Item>& spawnedItems) const {
             }
         }
         cout << endl;
+        cout << "Items: ";
+        for (const Item& item : survivor.getInventory()) {
+            cout << item.getName() << " ";
+        }
+        cout << endl << endl;
+        
     }
-    for (const Item& item : spawnedItems) {
-        cout << "Item: " << item.getName() << endl;
+
+    cout << "Bunker Items:" << endl;
+    for (const Item& item : bunkerInventory) {
+        cout << item.getName() << endl;
     }
 }
 
 
-vector<Item> Story::spawnItems(mt19937& gen) const {
-    vector<Item> spawnedItems;
+void Story::spawnStartingItems_bunker(mt19937& gen) {
     vector<int> spawnWeights;
 
     for (const Item& item : itemPool) {
         spawnWeights.push_back(item.getInitialSpawnWeight());
     }
 
-    discrete_distribution<size_t> distrib(spawnWeights.begin(), spawnWeights.end());
+    discrete_distribution<size_t> itemDistribution(spawnWeights.begin(), spawnWeights.end());
 
-    int numberOfItems = 10;
+    uniform_int_distribution<int> countDistribution(5, 15);
+    int numberOfItems = countDistribution(gen);
 
     for (int i = 0; i < numberOfItems; ++i) {
-        spawnedItems.push_back(itemPool[distrib(gen)]);
+        bunkerInventory.push_back(itemPool[itemDistribution(gen)]);
     }
-
-    return spawnedItems;
 }
 
+void Story::spawnStartingItems_characters(mt19937& gen) {
+    vector<int> spawnWeights;
+
+    for (const Item& item : itemPool) {
+        spawnWeights.push_back(item.getInitialSpawnWeight());
+    }
+
+    discrete_distribution<size_t> itemDistribution(spawnWeights.begin(), spawnWeights.end());
+    uniform_int_distribution<int> countDistribution(0, 3);
+
+    for (Person& survivor : characters) {
+        int numberOfItems = countDistribution(gen);
+        int added = 0;
+        int attempts = 0;
+
+        while (added < numberOfItems && attempts < 10) {
+            const Item& item = itemPool[itemDistribution(gen)];
+
+            if (survivor.addItem(item)) {
+                ++added;
+            }
+
+            ++attempts;
+        }
+    }
+}
 
 void Story::story(mt19937& gen){
 
-    vector<Item> spawnedItems = spawnItems(gen);
-    printStory(spawnedItems);
+    spawnStartingItems_bunker(gen);
+    spawnStartingItems_characters(gen);
+    printStory();
 
 }

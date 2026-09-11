@@ -12,11 +12,14 @@ class Story {
 private:
     vector<Person> characters;
     static const vector<Item> itemPool;
+    vector<Item> bunkerInventory;
+
 public:
     void setCharacter(Person characterName);
-    void printStory(const vector<Item>& spawnedItems) const;
+    void printStory() const;
     void story(mt19937& gen);
-    vector<Item> spawnItems(mt19937& gen) const;
+    void spawnStartingItems_bunker(mt19937& gen);
+    void spawnStartingItems_characters(mt19937& gen);
 };
 
 #endif

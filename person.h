@@ -29,6 +29,7 @@ public:
     string returnName() const { return name; }
     const vector<string>& returnTraits() const { return traits; }
     bool addItem(const Item& item);
+    const vector<Item>& getInventory() const { return Inventory; }
 };
 
 #endif
