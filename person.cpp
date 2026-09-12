@@ -112,3 +112,10 @@ bool Person::addItem(const Item& item) {
 
     return true;
 }
+
+
+void Person::setHydtrationLevelandFoodLevel(mt19937& gen) {
+    uniform_int_distribution<int> distrib(60, maxHydrationandFoodLevel);
+    hydrationLevel = distrib(gen);
+    foodLevel = distrib(gen);
+}

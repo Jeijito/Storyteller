@@ -219,6 +219,7 @@ int main() {
         person.setName(firstNames, lastNames, gen);
         person.setAge(gen);
         person.setTraits(traits, gen);
+        person.setHydtrationLevelandFoodLevel(gen);
         story.setCharacter(person);
     }
 

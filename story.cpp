@@ -63,7 +63,9 @@ void Story::printStory() const {
         cout << "Character ID: " << survivor.returnId() << endl;
         cout << "Name: " << survivor.returnName() << endl;
         cout << "Age: " << survivor.returnAge() << endl;
-        
+        cout << "Hydration Level: " << survivor.getHydrationLevel() << endl;
+        cout << "Food Level: " << survivor.getFoodLevel() << endl;
+
         cout << "Traits: ";
         const vector<Trait>& traits = survivor.returnTraits();
         for (size_t i = 0; i < traits.size(); ++i) {
