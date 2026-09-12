@@ -121,16 +121,25 @@ void Story::spawnStartingItems_bunker(mt19937& gen) {
 }
 
 void Story::spawnStartingItems_characters(mt19937& gen) {
-    vector<int> spawnWeights;
-
-    for (const Item& item : itemPool) {
-        spawnWeights.push_back(item.getInitialSpawnWeight());
-    }
-
-    discrete_distribution<size_t> itemDistribution(spawnWeights.begin(), spawnWeights.end());
     uniform_int_distribution<int> countDistribution(0, 3);
 
     for (Person& survivor : characters) {
+        vector<double> spawnWeights;
+
+        for (const Item& item : itemPool) {
+            double adjustedWeight = item.getInitialSpawnWeight();
+
+            for (const Trait& trait : survivor.returnTraits()) {
+                adjustedWeight *= trait.getItemSpawnModifier(
+                    item.getName()
+                );
+            }
+
+            spawnWeights.push_back(adjustedWeight);
+        }
+
+        discrete_distribution<size_t> itemDistribution(spawnWeights.begin(), spawnWeights.end());
+
         int numberOfItems = countDistribution(gen);
         int added = 0;
         int attempts = 0;
