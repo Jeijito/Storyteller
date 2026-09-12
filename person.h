@@ -21,8 +21,10 @@ private:
     int inventoryWeight = 0;
     int maxInventoryWeight = 20;
     int hydrationLevel = 0;
-    int maxHydrationandFoodLevel = 100;
+    int maxHydrationA+ndFoodLevel = 100;
     int foodLevel = 0;
+    int maxEnergyLevel = 100;
+    int energyLevel = 0;
 public:
     Person(int id);
     void setName(const vector<string>& firstNames, const vector<string>& lastNames, mt19937& gen);
@@ -34,9 +36,11 @@ public:
     const vector<Trait>& returnTraits() const { return traits; }
     bool addItem(const Item& item);
     const vector<Item>& getInventory() const { return Inventory; }
-    void setHydtrationLevelandFoodLevel(mt19937& gen);
+    void setHydrationAndFoodLevels(mt19937& gen);
     int getHydrationLevel() const { return hydrationLevel; }
     int getFoodLevel() const { return foodLevel; }
+    void setEnergyLevel(mt19937& gen);
+    int getEnergyLevel() const { return energyLevel; }
 };
 
 #endif

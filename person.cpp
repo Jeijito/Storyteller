@@ -114,8 +114,17 @@ bool Person::addItem(const Item& item) {
 }
 
 
-void Person::setHydtrationLevelandFoodLevel(mt19937& gen) {
-    uniform_int_distribution<int> distrib(60, maxHydrationandFoodLevel);
+void Person::setHydrationAndFoodLevels(mt19937& gen) {
+    uniform_int_distribution<int> distrib(60, maxHydrationAndFoodLevel);
     hydrationLevel = distrib(gen);
     foodLevel = distrib(gen);
+}
+
+void Person::setEnergyLevel(mt19937& gen) {
+    uniform_int_distribution<int> distrib(60, maxEnergyLevel);
+    energyLevel = distrib(gen);
+}
+
+int Person::getEnergyLevel() const {
+    return energyLevel;
 }
