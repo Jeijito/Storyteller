@@ -21,7 +21,7 @@ private:
     int inventoryWeight = 0;
     int maxInventoryWeight = 20;
     int hydrationLevel = 0;
-    int maxHydrationA+ndFoodLevel = 100;
+    int maxHydrationAndFoodLevel = 100;
     int foodLevel = 0;
     int maxEnergyLevel = 100;
     int energyLevel = 0;

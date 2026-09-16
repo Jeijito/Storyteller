@@ -67,28 +67,36 @@ void Person::setTraits(const vector<Trait>& availableTraits, mt19937& gen) {
     }
 
     uniform_int_distribution<size_t> distrib(0, availableTraits.size() - 1);
-
     int added = 0;
     int attempts = 0;
-
     while (added < 3 && attempts < 10) {
+        ++attempts;
         const Trait& candidate = availableTraits[distrib(gen)];
-        bool valid = true;
 
+
+        auto found = conflicts.find(candidate.getName());
+        const vector<string>* candidateConflicts;
+        if (found != conflicts.end()) {
+            candidateConflicts = &found->second;
+        } else {
+            candidateConflicts = nullptr;
+        }
+
+        bool valid = true;
         for (const Trait& currentTrait : traits) {
             if (candidate.getName() == currentTrait.getName()) {
                 valid = false;
                 break;
             }
-
-            auto found = conflicts.find(candidate.getName());
-
-            if (found != conflicts.end()) {
-                for (const string& conflictingTrait : found->second) {
+            if (candidateConflicts) {
+                for (const string& conflictingTrait : *candidateConflicts) {
                     if (currentTrait.getName() == conflictingTrait) {
                         valid = false;
                         break;
                     }
+                }
+                if (!valid){
+                    break;
                 }
             }
         }
@@ -97,8 +105,6 @@ void Person::setTraits(const vector<Trait>& availableTraits, mt19937& gen) {
             traits.push_back(candidate);
             ++added;
         }
-
-        ++attempts;
     }
 }
 
@@ -123,8 +129,4 @@ void Person::setHydrationAndFoodLevels(mt19937& gen) {
 void Person::setEnergyLevel(mt19937& gen) {
     uniform_int_distribution<int> distrib(60, maxEnergyLevel);
     energyLevel = distrib(gen);
-}
-
-int Person::getEnergyLevel() const {
-    return energyLevel;
 }

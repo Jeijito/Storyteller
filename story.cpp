@@ -54,8 +54,8 @@ const vector<Item> Story::itemPool = {
 };
 
 
-void Story::setCharacter(Person characterName) {
-    characters.push_back(characterName);
+void Story::setCharacter(const Person& character) {
+    characters.push_back(character);
 }
 
 void Story::printStory() const {

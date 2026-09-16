@@ -15,7 +15,7 @@ private:
     vector<Item> bunkerInventory;
 
 public:
-    void setCharacter(Person characterName);
+    void setCharacter(const Person& character);
     void printStory() const;
     void story(mt19937& gen);
     void spawnStartingItems_bunker(mt19937& gen);
